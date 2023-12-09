@@ -1,62 +1,74 @@
-#include <iostream>
-struct node {
-   int data;
-   struct node *leftChild;
-   struct node *rightChild;
-};
-struct node *root = NULL;
-void insert(int data){
-   struct node *tempNode = (struct node*) malloc(sizeof(struct node));
-   struct node *current;
-   struct node *parent;
-   tempNode->data = data;
-   tempNode->leftChild = NULL;
-   tempNode->rightChild = NULL;
-
-   //if tree is empty
-   if(root == NULL) {
-      root = tempNode;
-   } else {
-      current = root;
-      parent = NULL;
-      while(1) {
-         parent = current;
-
-         //go to left of the tree
-         if(data < parent->data) {
-            current = current->leftChild;
-
-            //insert to the left
-            if(current == NULL) {
-               parent->leftChild = tempNode;
-               return;
-            }
-         }//go to right of the tree
-         else {
-            current = current->rightChild;
-
-            //insert to the right
-            if(current == NULL) {
-               parent->rightChild = tempNode;
-               return;
-            }
-         }
-      }
-   }
-}
-void pre_order_traversal(struct node* root){
-   if(root != NULL) {
-      printf("%d ",root->data);
-      pre_order_traversal(root->leftChild);
-      pre_order_traversal(root->rightChild);
-   }
-}
-int main(){
-   int i;
-   int array[7] = { 27, 14, 35, 10, 19, 31, 42 };
-   for(i = 0; i < 7; i++)
-      insert(array[i]);
-   printf("Preorder traversal: ");
-   pre_order_traversal(root);
-   return 0;
-}
+#include <iostream>  
+  
+using namespace std;  
+  
+struct node {  
+    int element;  
+    struct node* left;  
+    struct node* right;  
+};  
+  
+/*To create a new node*/  
+struct node* createNode(int val)  
+{  
+    struct node* Node = (struct node*)malloc(sizeof(struct node));  
+    Node->element = val;  
+    Node->left = NULL;  
+    Node->right = NULL;  
+  
+    return (Node);  
+}  
+  
+/*function to traverse the nodes of binary tree in preorder*/  
+void traversePreorder(struct node* root)  
+{  
+    if (root == NULL)  
+        return;  
+    cout<<" "<<root->element<<" ";  
+    traversePreorder(root->left);  
+    traversePreorder(root->right);  
+}  
+  
+/*function to traverse the nodes of binary tree in Inorder*/  
+void traverseInorder(struct node* root)  
+{  
+    if (root == NULL)  
+        return;  
+    traverseInorder(root->left);  
+    cout<<" "<<root->element<<" ";  
+    traverseInorder(root->right);  
+}  
+  
+/*function to traverse the nodes of binary tree in postorder*/  
+void traversePostorder(struct node* root)  
+{  
+    if (root == NULL)  
+        return;  
+    traversePostorder(root->left);  
+    traversePostorder(root->right);  
+    cout<<" "<<root->element<<" ";  
+}  
+  
+int main()  
+{  
+    struct node* root = createNode(38);  
+    root->left = createNode(28);  
+    root->right = createNode(48);  
+    root->left->left = createNode(23);  
+    root->left->right = createNode(33);  
+    root->left->left->left = createNode(13);  
+    root->left->left->right = createNode(26);  
+    root->right->left = createNode(43);  
+    root->right->right = createNode(58);  
+    root->right->right->left = createNode(53);  
+    root->right->right->right = createNode(68);  
+    cout<<"\n The Preorder traversal of given binary tree is -\n";  
+    traversePreorder(root);  
+      
+    cout<<"\n The Inorder traversal of given binary tree is -\n";  
+    traverseInorder(root);  
+      
+    cout<<"\n The Postorder traversal of given binary tree is -\n";  
+    traversePostorder(root);  
+    return 0;  
+} 
