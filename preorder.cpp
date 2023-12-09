@@ -1,4 +1,5 @@
-#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
 struct node {
    int data;
    struct node *leftChild;
@@ -13,7 +14,7 @@ void insert(int data){
    tempNode->leftChild = NULL;
    tempNode->rightChild = NULL;
 
-   //if tree is empty
+//if tree is empty
    if(root == NULL) {
       root = tempNode;
    } else {
@@ -51,6 +52,20 @@ void pre_order_traversal(struct node* root){
       pre_order_traversal(root->rightChild);
    }
 }
+void inorder_traversal(struct node* root){
+   if(root != NULL) {
+      inorder_traversal(root->leftChild);
+      printf("%d ",root->data);
+      inorder_traversal(root->rightChild);
+   }
+}
+void post_order_traversal(struct node* root){
+   if(root != NULL) {
+      post_order_traversal(root->leftChild);
+      post_order_traversal(root->rightChild);
+      printf("%d ", root->data);
+   }
+}
 int main(){
    int i;
    int array[7] = { 27, 14, 35, 10, 19, 31, 42 };
@@ -58,5 +73,9 @@ int main(){
       insert(array[i]);
    printf("Preorder traversal: ");
    pre_order_traversal(root);
+   printf("\nInorder traversal: ");
+   inorder_traversal(root);
+   printf("\nPost order traversal: ");
+   post_order_traversal(root);
    return 0;
 }
